@@ -1,0 +1,69 @@
+<?php
+// Prépare une requête SQL pour sélectionner toutes les colonnes de la table 'users'
+    $query = $db->prepare('SELECT * FROM users');
+// Exécute la requête SQL préparée
+    $query->execute();
+// Récupère toutes les lignes de résultat de la requête sous forme d'un tableau associatif
+    $users = $query->fetchAll(PDO::FETCH_ASSOC);
+?>
+<main class="container py-5">
+    <h1>
+        Liste des utilisateurs
+    </h1>
+    <a href="index.php?route=create-user" class="btn btn-primary mt-3"><span class="bi-plus-circle-fill"></span> Créer un utilisateur</a>
+    <table class="my-5 table table-striped">
+        
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Mot de passe
+                </th>
+                <th>
+                    Prénom
+                </th>
+                <th>
+                    Nom
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            foreach($users as $user) {
+            ?>
+            <tr>
+                <td>
+                    #
+                </td>
+                <td>
+                    <?= $user['email'] ?>
+                </td>
+                <td>
+                     <?= $user['password'] ?>
+                </td>
+                <td>
+                     <?= $user['first_name'] ?>
+                </td>
+                <td>
+                     <?= $user['last_name'] ?>
+                </td>
+                <td>
+                    <a href="index.php?route=show-user&id=<?= $user['id'] ?>" class="btn btn-primary"><scan class="bi-eye-fill"></scan></a>
+                    <a href="index.php?route=edit-user&id=<?= $user['id'] ?>" class="btn btn-success"><scan class="bi-pencil-fill"></scan></a>
+                    <a href="logic/delete-user.php?id= <?= $user['id'] ?>" class="btn btn-danger"><scan class="bi-trash-fill"></scan></a>
+                </td>
+            </tr>
+            <?php 
+            };
+            ?>
+        </tbody>
+    </table>
+</main>
